@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/api/1.0/hydrominder/doses")
-@CrossOrigin(origins = "*")
 public class DoseController {
 
     @Autowired
