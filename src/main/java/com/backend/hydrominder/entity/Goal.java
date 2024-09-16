@@ -32,9 +32,11 @@ public class Goal {
     @Column(name = "date")
     private Date date;
 
+    public static final int dailygoal = 2200;
+
     public Goal(int id, int goal, boolean fullfilled, int margin, Date date) {
         this.id = id;
-        this.goal = goal;
+        this.goal = (goal == 0) ? dailygoal : goal;
         this.fullfilled = fullfilled;
         this.margin = margin;
         this.date = date;

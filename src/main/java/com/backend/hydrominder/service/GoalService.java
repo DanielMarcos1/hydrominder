@@ -25,10 +25,16 @@ public class GoalService {
     }
 
     public Goal createGoal(Goal goal) {
+        if (goal.getGoal() == 0) {
+            goal.setGoal(Goal.dailygoal);
+        }
         return goalRepository.save(goal);
     }
 
     public Goal updateGoal(Goal goal) {
+        if (goal.getGoal() == 0) {
+            goal.setGoal(Goal.dailygoal);
+        }
         return goalRepository.save(goal);
     }
 
