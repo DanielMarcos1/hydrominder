@@ -11,6 +11,8 @@ import com.backend.hydrominder.service.GoalService;
 import io.swagger.v3.oas.annotations.Operation;
 
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/1.0/hydrominder/goals")
@@ -38,17 +40,25 @@ public class GoalController {
 
     @PostMapping
     @Operation(summary = "Create a new goal")
-    public ResponseEntity<Goal> createGoal(@RequestBody Goal goal) {
-        return new ResponseEntity<>(goalService.createGoal(goal), HttpStatus.CREATED);
+    public ResponseEntity<Map<String, Object>> createGoal(@RequestBody Goal goal) {
+        Goal createdGoal = goalService.createGoal(goal);
+        Map<String, Object> response = new HashMap<>();
+        response.put("goal", createdGoal);
+        response.put("message", "criado com sucesso");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update a goal by ID")
-    public ResponseEntity<Goal> updateGoal(@PathVariable int id, @RequestBody Goal goal) {
+    public ResponseEntity<Map<String, Object>> updateGoal(@PathVariable int id, @RequestBody Goal goal) {
         Goal existingGoal = goalService.getGoalById(id);
         if (existingGoal != null) {
             goal.setId(id);
-            return new ResponseEntity<>(goalService.updateGoal(goal), HttpStatus.OK);
+            Goal updatedGoal = goalService.updateGoal(goal);
+            Map<String, Object> response = new HashMap<>();
+            response.put("goal", updatedGoal);
+            response.put("message", "atualizado com sucesso");
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -56,11 +66,13 @@ public class GoalController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a goal by ID")
-    public ResponseEntity<Void> deleteGoal(@PathVariable int id) {
+    public ResponseEntity<Map<String, String>> deleteGoal(@PathVariable int id) {
         Goal existingGoal = goalService.getGoalById(id);
         if (existingGoal != null) {
             goalService.deleteGoal(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "deletado com sucesso");
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
