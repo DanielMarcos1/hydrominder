@@ -27,6 +27,15 @@ public class GoalController {
         return new ResponseEntity<>(goalService.getAllGoals(), HttpStatus.OK);
     }
 
+    
+    @GetMapping("/dailygoal")
+    @Operation(summary = "Get the base daily goal value")
+    public ResponseEntity<Map<String, Integer>> getDailyGoal() {
+        Map<String, Integer> response = new HashMap<>();
+        response.put("dailyGoal", Goal.dailygoal);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     @Operation(summary = "Get a goal by ID")
     public ResponseEntity<Goal> getGoalById(@PathVariable int id) {
