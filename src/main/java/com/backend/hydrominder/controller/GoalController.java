@@ -16,6 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/1.0/hydrominder/goals")
+@CrossOrigin(origins = "*")
 public class GoalController {
 
     @Autowired
