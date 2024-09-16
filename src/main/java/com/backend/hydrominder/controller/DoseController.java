@@ -68,6 +68,7 @@ public class DoseController {
     }
 
     @GetMapping("/goal/{id}/doses")
+    @Operation(summary = "Get doses by goal ID")
     public ResponseEntity<List<Map<String, Object>>> getDosesByGoalId(@PathVariable("id") Long goalId) {
         List<Dose> doses = doseService.getDosesByGoalId(goalId);
         List<Map<String, Object>> response = doses.stream()
